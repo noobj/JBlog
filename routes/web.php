@@ -15,6 +15,8 @@ Route::get('/','PostController@index');
 Route::get('/home',['as' => 'home', 'uses' => 'PostController@index']);
 //authentication
 Auth::routes();
+//secret login entry
+Route::get('/fuckin', 'Auth\LoginController@showLoginForm');
 
 // check for logged in user
 Route::group(['middleware' => ['auth']], function()
