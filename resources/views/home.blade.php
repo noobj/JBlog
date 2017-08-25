@@ -19,7 +19,16 @@ There is no post till now. Login and write a new post now!!!
         @endif
         @endif
       </h3>
-      <p>{{ $post->created_at->format('M d,Y \a\t h:i a') }} By <a href="{{ url('/user/'.$post->author_id)}}">{{ $post->author->name }}</a></p>
+      <p>
+      {{ $post->created_at->format('M d,Y \a\t h:i a') }} By <a href="{{ url('/user/'.$post->author_id)}}">{{ $post->author->name }}</a>
+
+      @if($post->tags->count())
+        <span class="glyphicon glyphicon-tag"></span>
+        @foreach($post->tags->pluck('name') as $tag)
+            <a href="{{ url('showtag/'.$tag)}}">{{ $tag }}</a>
+        @endforeach
+      @endif
+      </p>
     </div>
     <div class="list-group-item">
       <article>

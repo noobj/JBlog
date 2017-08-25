@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostFormRequest;
 use App\Post;
 use App\User;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -25,7 +26,8 @@ class PostController extends Controller
 		// if user can post i.e. user is admin or author
 		if($request->user()->can_post())
 		{
-			return view('posts.create');
+			$tagList = Tag::pluck('name', 'name');
+			return view('posts.create', compact('tagList'));
 		}
 		else
 		{
@@ -40,6 +42,9 @@ class PostController extends Controller
 		$post->body = $request->get('body');
 		$post->slug = str_slug($post->title);
 		$post->author_id = $request->user()->id;
+
+
+
 		if($request->has('save'))
 		{
 			$post->active = 0;
@@ -51,8 +56,37 @@ class PostController extends Controller
 			$message = 'Post published successfully';
 		}
 		$post->save();
-		return redirect('edit/'.$post->slug)->withMessage($message);
+
+		if($request->input('tags')) {
+            $this->syncTags($post, $request->input('tags'));
+        }
+
+		return redirect('/'.$post->slug)->withMessage($message);
 	}
+
+	/**
+     * sync up the list of tags in the database
+     *
+     * @param Record $post
+     * @param array $tags
+     * @return \Illuminate\Http\Response
+     */
+    private function syncTags(Post $post, array $tags)
+    {
+        $tagList = [];
+        foreach ($tags as $tag) {
+            if(\App\Tag::where('name', '=', $tag)->exists()) {
+                $tag = \App\Tag::where('name', $tag)->first();
+                $tagList[] = $tag->id;
+            } else {
+                $tag = new \App\Tag(['name' => $tag]);
+                $tag->save();
+                $tagList[] = $tag->id;
+            }
+        }
+
+        $post->tags()->sync($tagList);
+    }
 
 	public function show($slug)
 	{
@@ -68,8 +102,10 @@ class PostController extends Controller
 	public function edit(Request $request, $slug)
 	{
 		$post = Post::where('slug', $slug)->first();
-		if($post && ($request->user()->id == $post->author_id || $request->user()->is_admin()))
-			return view('posts.edit')->with('post', $post);
+		if($post && ($request->user()->id == $post->author_id || $request->user()->is_admin())) {
+			$tagList = Tag::pluck('name', 'name');
+			return view('posts.edit', compact('tagList', 'post'));
+		}
 		return redirect('/')->withErrors('you have not sufficient permissions');
 	}
 
@@ -108,6 +144,10 @@ class PostController extends Controller
 				$landing = $post->slug;
 			}
 			$post->save();
+
+			if($request->input('tags')) {
+	            $this->syncTags($post, $request->input('tags'));
+	        }
 			return redirect($landing)->withMessage($message);
 		}
 		else

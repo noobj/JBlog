@@ -44,6 +44,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+            return redirect('/')->withErrors('requested page not found');
+        }
+
         return parent::render($request, $exception);
     }
 
