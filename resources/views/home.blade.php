@@ -8,33 +8,42 @@ There is no post till now. Login and write a new post now!!!
 @else
 <div class="">
   @foreach( $posts as $post )
-  <div class="list-group">
-    <div class="list-group-item">
-      <h3><a href="{{ url('/'.$post->slug) }}">{{ $post->title }}</a>
-        @if(!Auth::guest() && ($post->author_id == Auth::user()->id || Auth::user()->is_admin()))
+  <div style="margin-bottom: 100px" class="list-group">
+    <div class="">
+    @if(!Auth::guest() && ($post->author_id == Auth::user()->id || Auth::user()->is_admin()))
         @if($post->active == '1')
-        <button class="btn" style="float: right"><a href="{{ url('edit/'.$post->slug)}}">Edit Post</a></button>
+        <a style="float: right" href="{{ url('edit/'.$post->slug)}}"><span class="glyphicon glyphicon-pencil"></span></a>
         @else
-        <button class="btn" style="float: right"><a href="{{ url('edit/'.$post->slug)}}">Edit Draft</a></button>
+        <a style="float: right" href="{{ url('edit/'.$post->slug)}}"><span class="glyphicon glyphicon-pencil"></span></a>
         @endif
         @endif
-      </h3>
-      <p>
-      {{ $post->created_at->format('M d,Y \a\t h:i a') }} By <a href="{{ url('/user/'.$post->author_id)}}">{{ $post->author->name }}</a>
+      <h6>
+      <b>
+      {{ $post->created_at->format('n . d . y') }}
+      </b>
+      </h6>
+      <h4><a href="{{ url('/'.$post->slug) }}">{{ $post->title }}</a>
 
-      @if($post->tags->count())
-        <span class="glyphicon glyphicon-tag"></span>
-        @foreach($post->tags->pluck('name') as $tag)
-            <a href="{{ url('showtag/'.$tag)}}">{{ $tag }}</a>
-        @endforeach
-      @endif
-      </p>
+      </h4>
+
     </div>
-    <div class="list-group-item">
+    <div class="">
       <article>
         {!! str_limit($post->body, $limit = 500, $end = '....... <a href='.url("/".$post->slug).'>Read More</a>') !!}
       </article>
     </div>
+
+    <div class="">
+    <small>
+        @if($post->tags->count())
+          Tag:
+          @foreach($post->tags->pluck('name') as $tag)
+              <a href="{{ url('showtag/'.$tag)}}">{{ $tag }}</a>
+          @endforeach
+        @endif
+        </small>
+    </div>
+
   </div>
   @endforeach
   {!! $posts->render() !!}

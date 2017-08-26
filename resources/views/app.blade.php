@@ -15,9 +15,9 @@
   <!-- Google Code prettify -->
   <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   <style>
-  .linenums li {
+    .linenums li {
       list-style-type: decimal;
-  }
+    }
   </style>
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -102,17 +102,26 @@
       </ul>
     </div>
     @endif
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h2>@yield('title')</h2>
-            @yield('title-meta')
-          </div>
-          <div class="panel-body">
+    <div id='content' class="row-fluid">
+      <div class=" col-md-10 main">
+        <div class="">
+          <div class="">
             @yield('content')
           </div>
         </div>
+      </div>
+
+      <div class="col-md-2 sidebar ">
+        <b>Tag</b>
+        <ul style="padding-left: 20px;">
+          @foreach (\App\Tag::all() as $tag)
+          @if ($tag->posts->count())
+          <li>
+            <a href="{{ url('showtag/'.$tag->name)}}">{{ $tag->name }}</a>&nbsp;({{ $tag->posts->count() }})
+          </li>
+          @endif
+          @endforeach
+        </ul>
       </div>
     </div>
     <div class="row">
