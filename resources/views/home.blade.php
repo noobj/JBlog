@@ -29,7 +29,7 @@ There is no post till now. Login and write a new post now!!!
     </div>
     <div class="">
       <article>
-        {!! str_limit($post->body, $limit = 500, $end = '....... <a href='.url("/".$post->slug).'>Read More</a>') !!}
+        {!! App\Support\Str::limit($post->body, $limit = 500, $end = '....... <a href='.url("/".$post->slug).'>Read More</a>') !!}
       </article>
     </div>
 
