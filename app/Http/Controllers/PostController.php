@@ -159,7 +159,6 @@ class PostController extends Controller
 
 	public function destroy(Request $request, $id)
 	{
-    //
 		$post = Post::find($id);
 		if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
 		{
