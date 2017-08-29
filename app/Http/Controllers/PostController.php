@@ -6,6 +6,7 @@ use App\Http\Requests\PostFormRequest;
 use App\Post;
 use App\User;
 use App\Tag;
+use App\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -40,7 +41,7 @@ class PostController extends Controller
 		$post = new Post();
 		$post->title = $request->get('title');
 		$post->body = $request->get('body');
-		$post->slug = str_slug($post->title);
+		$post->slug = Str::slug($post->title);
 		$post->author_id = $request->user()->id;
 
 
@@ -117,7 +118,7 @@ class PostController extends Controller
 		if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
 		{
 			$title = $request->input('title');
-			$slug = str_slug($title);
+			$slug = Str::slug($title);
 			$duplicate = Post::where('slug',$slug)->first();
 			if($duplicate)
 			{
