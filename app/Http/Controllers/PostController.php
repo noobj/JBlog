@@ -58,8 +58,8 @@ class PostController extends Controller
 		}
 		$post->save();
 
-		if($request->input('tags')) {
-            $this->syncTags($post, $request->input('tags'));
+		if($request->input('taglist')) {
+            $this->syncTags($post, $request->input('taglist'));
         }
 
 		return redirect('/'.$post->slug)->withMessage($message);
@@ -146,8 +146,8 @@ class PostController extends Controller
 			}
 			$post->save();
 
-			if($request->input('tags')) {
-	            $this->syncTags($post, $request->input('tags'));
+			if($request->input('taglist')) {
+	            $this->syncTags($post, $request->input('taglist'));
 	        }
 			return redirect($landing)->withMessage($message);
 		}

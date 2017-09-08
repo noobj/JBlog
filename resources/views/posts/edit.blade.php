@@ -8,7 +8,6 @@ Edit Post
 <script type="text/javascript" src="{{ asset('js/tinymce.min.js') }}"></script>
 
 {!! Form::model($post, ['method' => 'POST', 'url' => '/update']) !!}
-<form method="post" action='{{ url("/update") }}'>
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" name="post_id" value="{{ $post->id }}{{ old('post_id') }}">
   <div class="form-group">
@@ -18,7 +17,7 @@ Edit Post
     {!! Form::textarea('body', null, ['class' => 'form-control']) !!}
   </div>
   <div class="form-group">
-    {!! Form::select('tags[]', $tagList, null, ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+    {!! Form::select('taglist[]', $tagList, null , ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
   </div>
 
   @if($post->active == '1')
