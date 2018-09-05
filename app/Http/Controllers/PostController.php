@@ -22,6 +22,13 @@ class PostController extends Controller
 		return view('home', compact('posts'))->withTitle($title);
 	}
 
+	public function api_index()
+	{
+		//fetch 5 posts from database which are active and latest
+		$posts = Post::where('active', 1)->orderBy('created_at', 'desc')->paginate(5);
+		return response()->json(['status' => 'success', 'posts' => $posts]);
+	}
+
 	public function create(Request $request)
 	{
 		// if user can post i.e. user is admin or author
