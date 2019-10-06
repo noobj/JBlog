@@ -17,7 +17,7 @@ Add New Post
 		<textarea name='body' >{{ old('body') }}</textarea>
 	</div>
 	<div class="form-group">
-	{!! Form::select('tags[]', $tagList, 'null', ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
+	{!! Form::select('taglist[]', $tagList, 'null', ['id' => 'tag_list', 'class' => 'form-control', 'multiple']) !!}
 	</div>
 
 	<input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
