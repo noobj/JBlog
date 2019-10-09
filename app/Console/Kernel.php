@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\ClearUselessTags::class
+        Commands\ClearUselessTags::class,
+        Commands\Upload2Evernote::class
     ];
 
     /**
