@@ -10,6 +10,7 @@ class Upload2Evernote extends Command
 {
     // the name of notebook would like to upload notes
     const NotebookName = '123';
+    
     /**
      * The name and signature of the console command.
      *
