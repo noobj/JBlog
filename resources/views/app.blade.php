@@ -9,6 +9,22 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
+  <script type="text/javascript">
+    function getMessage() {
+      $.ajax({
+         type: 'GET',
+         url: '/working_on',
+        success: function(data) {
+            $("#msg").html(`Now on ${data.category} for ${data.duriation}`);
+            setTimeout(getMessage, 10000);
+        }
+      });
+
+    }
+
+    getMessage();
+  </script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <!-- Fonts -->
   <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -48,6 +64,10 @@
           <ul class="nav navbar-nav">
             <li>
               <a href="{{ url('/time_record') }}">TIME</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li id="msg">nothing is working
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
