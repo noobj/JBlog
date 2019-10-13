@@ -45,11 +45,6 @@
               <a href="{{ url('/') }}">About</a>
             </li>
           </ul>
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="{{ url('/time_record') }}">TIME</a>
-            </li>
-          </ul>
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::guest())
             <!--li>

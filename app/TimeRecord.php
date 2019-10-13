@@ -20,12 +20,7 @@ class TimeRecord extends Model
     // returns the instance of the user who is author of that post
     public function category()
     {
-		return $this->belongsTo('App\TimeCategory', 'category_id');
-    }
-
-    public function scopeToday($query)
-    {
-		$query->whereDate('created_at', \Carbon\Carbon::today());
+    	return $this->belongsTo('App\TimeCategory','category_id');
     }
 
     public function duriation()
@@ -33,6 +28,6 @@ class TimeRecord extends Model
     	$checkedAt = Carbon::parse($this->checkouted_time);
     	$createdAt = Carbon::parse($this->created_at);
 
-		return $createdAt->diff($checkedAt)->format('%hh %im %ss');
+    	return $createdAt->diff($checkedAt)->format('%h:%i:%s');
     }
 }
