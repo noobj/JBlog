@@ -33,8 +33,6 @@ class TimeRecord extends Model
     	$checkedAt = Carbon::parse($this->checkouted_time);
     	$createdAt = Carbon::parse($this->created_at);
 
-        if($checkedAt == null) $checkedAt = Carbon::now();
-
 		return $createdAt->diff($checkedAt)->format('%hh %im %ss');
     }
 }

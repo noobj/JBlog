@@ -25,8 +25,6 @@ Route::group(['middleware' => ['auth']], function()
 	//T.I.M.E
 	Route::get('time_record','TimeRecordController@list');
 
-	Route::get('working_on', 'TimeRecordController@workingOn');
-
 	// show new post form
 	Route::get('new-post','PostController@create');
 	// save new post

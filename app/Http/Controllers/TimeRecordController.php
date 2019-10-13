@@ -28,17 +28,4 @@ class TimeRecordController extends Controller
     	//return home.blade.php template from resources/views folder
 		return view('time_record.list', compact('records', 'current'))->withTitle($title);
     }
-
-	/**
-     * return the current working project and duriation
-     *
-     * @param void
-     * @return \Illuminate\Http\Response
-     */
-    public function workingOn() {
-		// fetch the current working project
-		$current = TimeRecord::Today()->where('done', 0)->first();
-
-		return response()->json(['status' => 'success', 'category' => $current->category->name, 'duriation' => $current->duriation() ]);
-    }
 }
